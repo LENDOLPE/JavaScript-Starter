@@ -1,38 +1,26 @@
-// 나의 나이와, 나의 성별을 저장하는 변수
-let myAge = 26;
-let myGender = "male";
+/**
+ * [마우스 이동 이벤트]
+ *
+ * > MouseEvent.type
+ * mousemove: 마우스 포인터가 움직일 때
+ * mouseover: 마우스 포인터가 요소 밖에서 안으로 움직일 때
+ * mouseout: 마우스 포인터가 요소 안에서 밖으로 움직일 때
+ *
+ * > MouseEvent.target
+ * : 이벤트가 발생한 요소
+ *
+ * > MouseEvent.relatedTarget
+ * : 이벤트가 발생하기 직전(또는 직후)에 마우스가 위치해 있던 요소
+ */
 
-// 호칭을 담은 변수
-let callOlderBrother = "형";
-let callOlderSister = "누나";
-let callFriend = "친구";
-let callYoungerSister = "여동생";
-let callYoungerBrother = "남동생";
+const box2 = document.querySelector("#box2");
 
-// 상대방의 나이와 성별에 따른 호칭을 리턴하는 함수 whatShouldICall를 완성하세요.
-function whatShouldICallYou(yourAge, yourGender) {
-  if (myAge < yourAge && myGender === yourGender) {
-    callOlderBrother;
-  } else if (myAge < yourAge && myGender !== yourGender) {
-    console.log(callOlderSister);
-  } else if (myAge > yourAge && myGender === yourGender) {
-    console.log(callYoungerBrother);
-  } else if (myAge > yourAge && myGender !== yourGender) {
-    console.log(callYoungerSister);
-  } else {
-    console.log(callFriend);
-  }
+function printEventData(e) {
+  console.log("event:", e.type);
+  console.log("target:", e.target);
+  console.log("relatedTarget:", e.relatedTarget);
+  console.log("------------------------------------");
 }
 
-// 테스트 코드
-let result1 = whatShouldICallYou(25, "female");
-let result2 = whatShouldICallYou(20, "male");
-let result3 = whatShouldICallYou(26, "female");
-let result4 = whatShouldICallYou(30, "male");
-let result5 = whatShouldICallYou(31, "female");
-
-console.log(result1);
-console.log(result2);
-console.log(result3);
-console.log(result4);
-console.log(result5);
+box2.addEventListener("mouseover", printEventData);
+box2.addEventListener("mouseout", printEventData);
