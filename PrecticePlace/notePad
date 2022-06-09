@@ -1,0 +1,853 @@
+DOM 프로퍼티
+
+/* 태그 선택자
+myTag.getElementByld('id') --  id에 해당하는 태그 하나
+myTag.getElementByClassName('class') -- class에 해당하는 태그모음(HtmlCollection)
+  ▷비어있는 HTMLCollection
+myTag.getElementByTaname('tag') -- tag에 해당하는 태그 모음(HtmlCollection)
+myTag.querySelector('css') -- css선택자에 해당하는 태그 중 가장 첫번째 태그하나
+myTag.SelectorAll('css') -- css선택자에 해당하는 태그 모음
+ ▷값이 없을때 null값 리턴
+*/
+
+/* 요소 노드에 대한 이동 프로퍼티
+element.children			자식 요소 노드	element의 자식 요소 모음(HTMLCollection)
+element.firstElementChild		자식 요소 노드	element의 첫 번째 자식 요소 하나
+element.lastElementChild		자식 요소 노드	element의 마지막 자식 요소 하나
+element.parentElement		부모 요소 노드	element의 부모 요소 하나
+element.previousElementSibling	형제 요소 노드	element의 이전(previous) 혹은 좌측(left)에 있는 요소 하나
+element.nextElementSibling	형제 요소 노드	element의 다음(next) 혹은 우측(right)에 있는 요소 하나
+*/
+
+/* 요소 노드에 대한 이동 프로퍼티
+node.childNodes		자식 노드	node의 자식 노드 모음(NodeList)
+node.firstChild		자식 노드	node의 첫 번째 자식 노드 하나
+node.lastChild		자식 노드	node의 마지막 자식 노드 하나
+node.parentNode		부모 노드	node의 부모 요소 하나
+node.previousSibling	형제 노드	node의 이전(previous) 혹은 좌측(left)에 있는 노드 하나
+node.nextSibling		형제 노드	node의 다음(next) 혹은 우측(right)에 있는 노드 하나
+*/
+
+/* 주요 요소 노드 프로퍼티
+element.innerHTML
+▷요소 노드 내부의 HTML코드 문자열로 리턴
+	▷요소 안의 정보를 확인할 수도 있지만,
+	내부의 HTML 자체를 수정할 때 좀 더 자주 활용
+
+element.outerHTML
+▷요소 노드 자체의 전체적인 HTML 코드를 문자열로 리턴
+	▷outerHTML은 새로운 값을 할당하면
+	요소 자체가 교체되어 버리기 때문에 주의
+
+element.textContent
+▷요소 노드 내부의 내용들 중에서 HTML을 제외하고 텍스트만 리턴
+	▷textContent는 말그대로 텍스트만 다루기 때문에 
+	HTML태그를 쓰더라도 모두 텍스트로 처리됨
+*/
+
+
+
+─────────────────────────────────────────────────────────
+
+/* 요소의 사용법
+요소 노드 만들기: document.createElement('태그이름')
+요소 노드 꾸미기: element.textContent, element.innerHTML, ...
+요소 노드 추가 혹은 이동하기: element.prepend, element.append, element.after, element.before
+요소 노드 삭제하기: element.remove()
+*/
+
+/* 요소 노드 추가
+append 는 대상을 node 의 마지막에 삽입을 하게되고,
+prepend 는 대상을 node 의 가장 앞에 삽입을 하게 됩니다. 
+before는 대상을 node 이전에 삽입해주고,
+after 는 대상을 node 다음에 삽입해줍니다
+*/
+
+/* 요소 노드 추가
+const li = document.createElementNS("li");		넣을 값 선언 및 ()안에 형태 지정
+li.classList.add("item");					적용할 클래스 지정
+li.textContent = "코드잇";					적용할 텍스트 입력
+toDoList.append(li);						넣을 위치 지정
+
+//삽입 할 위치 지정
+const 상수1 =  document.querySelector("원하는 위치의 css값" (id값이면'#' class값이면'.' ))
+const 상수2 = document.createElement("태그[넣으려고 하는태그]")
+상수2.textContent = 원하는문자
+상수1.append(상수2)
+*/
+
+/* 노드 삭제 및 이동
+const 상수1 = querySelector('#css값[바꾸려는 위치]')
+const 상수2 = querySelector('#css값[바꾸려는 위치]')
+
+상수1.remove()
+▷상수1을 지운다
+
+상수1.children[2].remove()
+▷상수1의 3번째자식을 지운다
+
+상수1.append(상수2.children[1]);
+▷상수 1의 마지막에 이동한다 
+무엇이? 상수2의 2번째자식이
+
+상수2.children[1].before(상수1.children[2])
+▷상수2의 2번째 자식 전으로 이동한다
+무엇이? 상수 1의 3번째 자식이
+
+상수2.lastElementChild.before(상수1.children[1])
+▷상수2의 마지막자식 전으로 옮긴다
+무엇이? 상수1의 2번째 자식이
+*/
+
+============================================================================================================================
+
+/* HTML 속성 
+const tomorrow = document.querySelector('#tomorrow');
+const item = tomorrow.firstElementChild;
+const link = item.firstElementChild;
+
+// elem.getAttribute('속성'): 속성에 접근하기
+console.log(tomorrow.getAttribute('href'));	href 속성에 접근
+console.log(item.getAttribute('class'));		class 속성에 접근
+
+// elem.setAttribute('속성', '값'): 속성 추가(수정)하기
+tomorrow.setAttribute('class', 'list'); // 추가
+link.setAttribute('href', 'https://www.codeit.kr'); // 수정
+
+// elem.removeAttribute('속성'): 속성 제거하기
+tomorrow.removeAttribute('href'); 
+tomorrow.removeAttribute('class'); 
+
+// id 속성
+console.log(tomorrow);
+console.log(tomorrow.id);
+
+// class 속성
+console.log(item);
+console.log(item.className);
+
+// href 속성
+console.log(link);
+console.log(link.href);
+console.log(tomorrow.href);
+*/
+
+/* HTML 속성 다루기
+속성에 접근하기: element.getAttribute('속성')
+속성 추가(수정)하기: element.setAttribute('속성', '값')
+속성 제거하기: element.removeAttribute('속성')
+*/
+
+============================================================================================================================
+
+/* 스타일 다루기
+const today = document.querySelector('#today');
+const tomorrow = document.querySelector('#tomorrow');
+
+// elem.classList: add, remove, toggle
+const item = tomorrow.children[1];
+item.classList.add('done');
+item.classList.remove('done');
+item.classList.toggle('done');
+
+classList.add	클래스 추가하기	여러 개의 값을 전달하면 여러 클래스 추가 가능
+classList.remove	클래스 삭제하기	여러 개의 값을 전달하면 여러 클래스 삭제 가능
+classList.toggle("visible", i < 10 ); 	클래스 없으면 추가, 있으면 삭제하기	하나의 값만 적용 가능하고,
+두 번째 파라미터로 추가 또는 삭제 기능을 강제할 수 있음
+*/
+
+
+
+// elem.className
+today.children[1].className = 'done';
+
+// style 프로퍼티
+today.children[0].style.textDecoration = 'line-through';
+today.children[0].style.backgroundColor = '#DDDDDD';
+today.children[2].style.textDecoration = 'line-through';
+today.children[2].style.backgroundColor = '#DDDDDD';
+*/
+
+============================================================================================================================
+
+/*
+for(let 변수명 in 가져올 객체){
+	객체의 수만큼 반복
+	프로퍼티의 네임이 정수형일때 오름차순으로 정렬 나머지는 추가한 순서대로 정렬하는 특징
+}
+
+for(let 변수명 of 가져올 배열){
+	가져올 배열의 수만큼 반복
+}
+*/
+
+============================================================================================================================
+
+이벤트의 종류
+
+/* 마우스이벤트의 종류
+mousedown			마우스 버튼을 누르는 순간
+mousup			마우스 버튼을 눌렀다 떼는 순간
+click				왼쪽 버튼을 클릭한 순간
+dbclick			왼쪽 버튼을 빠르게 두번 클릭 한 순간.
+contextmenu			오른쪽 버튼을 클릭한 순간
+mousemove			마우스를 움직이는 순간
+mouseover			마우스 포인터가 요소 위로 올라온 순간
+mouseout			마우스 포인터가 요소에서 벗어나는 순간
+mouseenter			마우스 포인터가 요소 위로 올라온 순간(버블링이 일어나지 않음)
+mouseleave			마우스 포인터가 요소에서 벗어나는 순간(버블링이 일어나지 않음)
+*/
+
+/* 키보드 이벤트
+keydown			키보드의 버튼을 누르는 순간
+keypress			키보드이 버튼을 누르는 순간('a', '5'등 출력이 가능한 키에서만 동작하며, shift, esc등의 키에는 반응하지 않는다.
+keyup				키보드의 버튼이 눌렀다 떼는순간
+*/
+
+/* 포커스 이벤트
+focusin			요소에 포커스가 되는 순간
+focusout			요소로부터 포커스가 빠져나가는 순간
+focus				요소에 포커스가 되는 순간(버블링이  일어나지 않음)
+blur				요소로부터 포커스가 빠져나가는순간(버블링이 일어나지 않음)
+*/
+
+/* 입력 이벤트
+change			입력값이 바뀌는 순간
+input				값이 입력되는 순간
+select				입력 양식의 하나가 선택되는 순간
+submit			폼을 전송하는 순간
+*/
+
+/* 스크롤 이벤트
+scroll 				스크롤바가 움직일때
+*/
+
+/* 윈도우 창 이벤트
+resize 			윈도우 사이즈를 움직일 때 발생
+*/
+
+────────────────────────────────────────────────────────────────────
+
+이벤트 객체 프로퍼티
+
+/*공동 프로퍼티
+type				이벤트 이름('click', 'mouseup', 'keydown' 등)
+target				이벤트가 발생한 요소
+- target의 정의
+ 최초에 발생한 이벤트의 위치를 파악
+ 버블링이 일어나도 이벤트 객체의 타겟프로퍼티는 변하지 않고 처음 이벤트가 발생한 시작점을 담고있다.
+
+currentTarget			이벤트 헨들러가 등록된 요소
+timeStamp			이벤트 발생 시각(페이지가 로드 된 이후부터 경과한 밀리초)
+bubbles			버블링 단계인지 판단하는 값
+*/
+
+/* 마우스 이벤트
+button			누른 마우스의 버튼(0: 왼쪽, 1: 가운데(휠), 2: 오른쪽)
+clientX, clientY 		마우스 커서의 브라우저 표시 영역에서의 위치
+pageX, pageY		마우스 커서의 문서 영역에서의 위치
+offsetX, offsetY		마우스커서의 이벤트 발생한 요소에서의 위치
+screenX, screenY		마우스커서의 모니터 화면 영역에서의 위치
+altKey				이벤트가 발생할때 alt키를 눌렀는지
+ctrlKey			이벤트가 발생할때 ctrl키를 눌렀는지
+shiftKey			이벤트가 발생할때 shift키를 눌렀는지
+metaKey			이벤트가 발생할 떄 meta키를 눌렀는지(window는 window키, mac은 cmd키)
+*/
+
+/* 키보드 이벤트
+key				누른 키가 가지고 있는 값
+code				누른 키의 물리적인 위치
+altKey	이벤트가 발생할 때 alt키를 눌렀는지
+ctrlKey	이벤트가 발생할 때 ctrl키를 눌렀는지
+shiftKey	이벤트가 발생할 때 shift키를 눌렀는지
+metaKey	이벤트가 발생할 때 meta키를 눌렀는지 (window는 window키, mac은 cmd키)
+*/
+
+────────────────────────────────────────────────────────────────────
+
+이벤트 정리
+
+-이벤트 핸들러 등록방법
+Element.addEventListener('type', 'handler')
+
+-이벤트 핸들러 삭제하기
+Element.removeEventListner('type', 'handler')
+
+-이벤트 객체 상호작용 등록
+Element.addEventListner('type', funtion(e){
+	e.target.classList.add('class')
+})
+
+-이벤트 버블링
+stopPropageation()으로 버블링을 막을수 있다
+
+-브라우저의 기본기능 차단
+preventDefault()
+
+────────────────────────────────────────────────────────────────────
+
+-이벤트의 위임
+const list = docment.querySelector('#list')
+
+for(let item of list.children){
+	item.addEventListener('click', function(e){
+		e.target.classList.toggle('done')
+	})
+}
+
+const li = docment.createElement('li')
+li.classList.add('item')
+li.textContent = '일기쓰기'				//이코드는 이벤트 헨들러가 적용되있는 곳에 데이터를 추가하면
+list.append							이벤트 헨들러가 같이 적용이 되지 않음
+
+============================================================================================================================
+
+const list = docment.querySelector('#list')
+
+	list.addEventListener('click', function(e){
+		e.target.classList.toggle('done')
+	})
+
+const li = docment.createElement('li')
+li.classList.add('item')
+li.textContent = '일기쓰기'				//부모요소에 이벤트 핸들러를 적용하면 추가된 값에도 이벤트 핸들러가  추가되지만
+list.append							부모요소 또한 이벤트 헨들러가 적용되어 클릭하는 범위가 넓어지고 곤란해짐
+
+============================================================================================================================
+
+const list = docment.querySelector('list')
+
+list.addEventListener('click', function(e){
+	//if (e.target.tagName === 'LI')
+	if (e.target.classList.contains('item')){
+	e.target.classList.toggle('done')
+	}
+})
+
+const li = docment.createElement('li')
+li.classList.add('item')
+li.textContent = '일기쓰기'				//조건문을 통해 부모요소에 이벤트핸들러를 등록하여
+list.append							"해당클래스만 적용 되있는지와" "해당태그만 적용되도록" 조건문을 걸어 이벤트 핸들러를 적용
+
+────────────────────────────────────────────────────────────────────
+
+마우스 버튼 이벤트
+
+-MouseEvent.button
+0 : 마우스 왼쪽 버튼
+1 : 마우스 휠
+2 : 마우스 오른쪽 버튼
+
+-MouseEvent.type
+click : 			마우스 왼쪽 버튼을 눌렀을때
+contextmenu		마우스 오른쪽 버튼을 눌렀을 때
+dbclick			동일한 위치에서 빠르게 두번 click 했을 때
+mousedown			마우스 버튼을 누른 순간
+mouseup			마우스 버튼을 눌렀다 땐 순간
+
+EX)
+if (e.button === 0) {
+	flag.classList.toggle('up')
+}
+
+
+=====================================================================================================
+
+마우스 좌표 이벤트
+
+-clientX(Y)
+▷ 브라우저가 표시하는 화면 내에서 마우스의 좌표를 담고있다.
+
+-offset
+▷ 이벤트가 발생한 target이 기준
+
+-page
+▷ 전체문서를 기준으로 좌표 정보를 담고있다
+
+EX)
+const Element = docment.querySelector('#id')
+
+function coordinate (e){
+console.log(`client: ${e.clientX},${e.clientY}`)
+}
+
+Element.addEventListener('mousemove', coordinate)
+
+====================================================================================================
+
+마우스 이동 이벤트
+
+MouseEvent.type
+mousemove:		마우스포인터가 이동할 때
+mouseover:		마우스 포인가 요소 밖에서 안으로 이동했을떄
+mouseout:		마우스 포인터가 요소 안에서 밖으로 이동했을 떄
+
+MouseEvent.target
+-이벤트가 발생한 요소
+
+MouseEvent.relatedTarget
+-이벤트가 발생하기 직전(또는 직후)에 마우스가 위치해 있던 요소
+
+EX)
+const Element = docment.querySelement('#id')
+
+function Moving(e){
+	if(e.target.classList.contains('비교값')){
+	e.target.classList.toggle('적용시킬 css값')	
+	}
+}
+
+Element.addEventListener('mouseover', Moving)
+Element.addEventListener('mouseout', Moving)
+
+====================================================================================================
+
+스크롤 이벤트
+
+window.scrollY
+
+
+
+Element.addEventLisener('scroll', function)
+
+====================================================================================================
+
+AND와 OR의 연산 방식 
+
+-AND연산자 &&
+console.log(true && true)
+console.log(true && false)
+console.log(false && true)
+console.log(false && false)
+▷왼쪽 값이 true일때 오른쪽 값을 출력
+▷왼쪽 값이 false일때 왼쪽값을 출력
+
+-OR연산자 ||
+console.log(true || true)
+console.log(true || false)
+console.log(false || true)
+console.log(false || false)
+▷왼쪽 값이 true일때 왼쪽 값을 출력
+▷왼쪽 값이 false일때 오른쪽 값을 출력
+
+-(연산 순서는 AND가 우선순위)
+console.log(true || false && false); // true
+console.log((true || false) && false); // false
+
+console.log('Codeit' || NaN && false); // Codeit
+console.log(('Codeit' || NaN) && false); // false
+
+====================================================================================================
+
+조건문에서 boolean값이 나오는 조건
+
+// falsy (false)
+Boolean(false);
+Boolean(null);
+Boolean(undefined);
+Boolean(0);
+Boolean(NaN);
+Boolean('');
+
+// truthy (true)
+Boolean(true);
+Boolean('codeit');
+Boolean(123);
+Boolean(-123);
+Boolean({});
+Boolean([]);
+
+====================================================================================================
+
+- 함수선언
+function sayHi(){
+	console.log('HI!')
+}
+
+함수 표현식
+const sayHi = fuction () {
+	console.log('Hi')
+}
+
+
+- 여러가지의 함수 형태
+
+//변수에 할당
+const printJs = function() {
+	console.log(JavaScript)	
+}
+
+//객체의 메소드로 활용
+const codeit = {
+	printTitle : function () {
+		console.log('Codeit')
+	}
+}
+
+//콜백 함수
+myBtn.addEventListener('click', function () {
+	console.log('button is clicked!')
+})
+
+//고차 함수로 활용
+function myFuction() {
+	return function() {
+	console.log('Hi?')
+	}
+}
+
+
+- 파라미터의 기본값
+funtion sayHi(name = 'Codeit') {
+	console.log(`Hi! ${name}`)
+}
+
+sayHi('JavaScript')		// Hi JavaScript
+sayHi();			// Hi Codeit
+
+
+- arguments 객체
+function printArguments() {
+//arguments 객체의 요소들을 하나씩 출력
+	for(const arg of arguments) {
+	console.log(args)
+	}
+}
+
+pirntArgments('young', 'Mark', 'Koby')
+
+
+-'Rest Parameter'
+function pirntArgments(...args) {
+//args 객체의 요소들을 하나씩 출력
+	for(const arg of args){
+	console.log(arg)
+	}
+}
+
+printArgments('Young', 'Mark', 'Koby')
+
+OR
+
+function printRankingList(first, second, ...others) {
+	console.log('코드잇 레이스 최종 결과');
+	console.log(`우승: ${first}`);
+	console.log(`준우승: ${second}`);
+	for (const arg of others) {
+  		console.log(`참가자: ${arg}`);
+  }
+}
+
+printRankingList('Tommy', 'Jerry', 'Suri', 'Sunny', 'Jack');
+
+정의된 이름 그대로 앞에 정의된 파라미터에 argument를 먼저 할당하고 나머지 argument를 배열로 묶는 역할
+
+
+- 'Arrow Function'
+//화살표 함수 정의
+const getTwice = (number) => {
+	return number * 2
+}
+
+//콜백 함수로 활용
+myBtn.addEventListener('click', () => {
+	console.log('button is clicked!')
+})
+
+다양한 상황에 따라 축약형
+
+//1. 함수의 파라미터가 하나 뿐일 때
+const getTwice = (number)=> {
+	return number * 2
+}
+
+//파라미터를 감싸는 소괄호 생략 가능
+const getTwice = number => {
+	return number * 2
+}
+
+//2. 함수 동작 부분이 return문만 있을 때
+const sum = (a, b) => {
+	return a + b
+}
+
+//return문과 중괄호 생략 가능
+cosnt sum = (a, b) => a + b
+
+객체의 메소드를 만들 땐 Arrow Function 보다는 일반 함수가 좀 더 권장된다
+
+-this
+const user = {
+	firstName: 'Tess',
+	lastName: 'Jang',
+	getFullName: function () {
+		return `${this.firstName} ${this.lastName}`
+	}
+}
+
+console.log(user.getFullName())		// getFullName 안에서의 this는 getFullName을 호출한 user객체가 담긴다!
+
+====================================================================================================
+
+조건 연산자 (삼항연산자)
+조건 ? ture일때 표현식 : false 일때 표현식
+
+
+let msg = ''										
+											
+if(x > 3) {										
+	msg = 'x는 3보다 크다.'			=>	let msg = x > 3 ? 'x는 보다 크다' : 'x는 3보다 크지 않다.'
+} else {										
+	msg = 'x는 3보다 크지 않다'						
+}											
+				
+====================================================================================================
+
+Spread 구문 (배열을 다룰때 유용하다, rest paramiter와 비슷함 !주의)
+
+const numbers = [1, 2, 3]						    const numbers = [1, 2, 3]
+console.log(numbers)			    => 		  	console.log(...numbers)
+									
+▷ 출력 : [1, 2, 3]							        ▷출력 : 1 2 3
+
+
+const webPublising = ['HTML', 'CSS']
+const interactiveWeb = webPublising
+
+interactiveWeb.push('JavaScript')
+
+console.log(webPublising)         ▷출력 : [HTML, CSS, JavaScript]
+console.log(interactiveWeb)       ▷출력 : [HTML, CSS, JavaScript]
+
+
+이렇게 작성 시 interactiveWeb은 webPublising를 참조하게 되어
+interactiveWeb에만 JavaScript를 추가해 주어도 webPublising을 참조하기에 같이 추가가되어 출력된다.
+
+참조가 아닌 복사를 하기위해서는 아래 방식을 채택한다
+const webPublising = ['HTML', 'CSS']
+const interactiveWeb = [...webPublising]   //[...webPublising, 'JavaScript']
+// 또는 const interactiveWeb = webPublising.slice()
+
+interactiveWeb.push('JavaScript')
+
+console.log(webPublising)       ▷출력 : [HTML, CSS]
+console.log(interactiveWeb)     ▷출력 : [HTML, CSS, JavaScript]
+
+
+Spread구문의 활용 1
+const arr1 = [1, 2, 3]
+const arr2 = [4, 5, 6]
+
+const arr3 = [...arr1, arr2]
+console.log(arr3) // ▷출력 : [1, 2, 3, 4, 5, 6]
+
+
+Spread구문의 활용 2
+const introduce = (name, birth, job) => {
+  console.log('스프레드구문의')
+  console.log(`${first}은`)
+  console.log(`${second}면서도`)
+  console.log(`재미있지만${third}같다`)
+}
+
+const myArr = ['활용법', '다양하', '어려운것']
+introduce(...myArr)
+
+
+Spread구문의 활용 2
+const latte = {
+  esspresso: '30ml',
+  milk: '150ml',
+}
+
+const cafeMocha = {
+  ...latte,
+  chocolate: '20ml',
+}
+
+console.log(latte)           // ▷출력 : {esspresso: "30ml", milk: "150ml"}
+console.log(cafeMocha)       // ▷출력 : {esspresso: "30ml", milk: "150ml", chocolate: "20ml"}
+
+
+Spread문 주의사항
+새로운 배열을 만든다거나 함수의 아규먼트로는 사용할 수 없다.
+ex)
+const latte = {
+  esspresso: '30ml',
+  milk: '150ml'
+};
+
+const cafeMocha = {
+  ...latte,
+  chocolate: '20ml',
+}
+
+[...latte]; // Error
+
+(function (...args) {
+  for (const arg of args) {
+    console.log(arg);
+  }
+})(...cafeMocha); // Error
+
+====================================================================================================
+
+'코드 간결화'
+
+변수나 함수의 이름과 프로퍼티의 이름이 같다면 아래와 같이 생략 가능
+const title = 'Codeit'                      const title = 'Codeit'
+const birth = 2017                          const birth = 2017
+const job = '프로그래머'                     const job = '프로그래머'
+                             =>             
+const user = {                              const user = {
+  title: title,                               title,
+  birth: birth,                               birth,
+  job: job,                                   job,
+}                                            }
+
+
+const user = {
+  firstName: 'Tess',
+  lastName: 'Jang',
+  getFullName: fuction() {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+                ↓
+const user = {
+  firstName: 'Tess',
+  lastName: 'Jang',
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+
+-계산된 속성명(computed property name)
+const propertyName = 'birth'
+const get job = () => 'job'
+
+const Codeit = {
+  ['topic' + 'Name']: 'Modern JavaScript',
+  [propertyName]: 2017,
+  [getJob()]:'프로그래밍 강사',
+}
+
+console.log(Codeit)
+▷출력: {topicName: 'Modern JavaScript', birth: 2017, job: '프로그래밍 강사'}
+
+====================================================================================================
+
+'옵셔널 체이닝(Optional Chaining)'
+
+function printCatName(user) {
+  console.log(user.cat.name);
+}
+
+const user1 = {
+  name: 'Captain',
+  cat: {
+    name: 'Crew',
+    breed: 'British Shorthair',
+  }
+}
+const user2 = {
+  name: 'Young',
+}
+
+
+printCatName(user1); // Crew
+console.log(user2.cat); // undefined
+printCatName(user2); // TypeError: Cannot read property 'name' of undefined
+
+user2는 cat 프로퍼티를 가지고 있지 않기에 접근하려는 순간 에러가 발생.
+
+옵셔널 체이닝 연산자를 이용
+function printCatName(user) {
+  console.log(user.cat?.name);
+}
+
+옵셔널 체이닝 연산자를 삼항 연산자로 구현
+function printCatName(user) {
+  console.log((user.cat === null || user.cat === undefined) ? undefined : user.cat.name);
+}
+
+응용
+function printCatName(user) {
+  console.log(user.cat?.name ?? '함께 지내는 고양이가 없습니다.');
+}
+
+const user2 = {
+  name: 'Young',
+}
+
+printCatName(user2); // 함께 지내는 고양이가 없습니다.
+
+====================================================================================================
+
+'구조분해 (Destructuring)'
+배열이나 객체의 구조를 분해한다.
+
+-배열
+const rank  = ['유나', '호준', '민환', '재하']
+
+const macbook = rank[0]
+const ipad = rank[1]
+const airpods = rank[2]
+const coupon = rank[3]
+
+          ↓ 이렇게 변경
+
+const [macbook, ipad, airpods, coupon] = rank
+
+//const [macbook, ipad, airpods, ...coupon] = rank
+분해 하는 도중 rest파라미터 처럼 순서대로 배열을 넣고
+마지막에 ...coupon에 나머지 값을 다 넣을수 도 있다.
+(요소의 값이 변수보다 많을경우 마지막 요소는 어느곳에도 할당 대지 않음)
+(변수의 값이 요소보다 더 많을경우 마지막 변수는 undefined값이 됨)
+(함수의 파라미터 처럼 기본값 할당 가능)
+ex) 
+const [macbook, ipad, airpods, coupon = "기본값"] = rank
+
+console.log(macbook, ipad, airpods, coupon)
+
+
+-변수
+할당된 값을 교환할때 사용
+
+let macbook = '효준'
+let ipad = '유나'
+
+console.log('Macbook 당첨자: ', macbook)
+console.log('iPad 당첨자: ', ipad)
+
+let temp = macbook
+macbook = ipad
+ipad = temp
+
+              ↓ 이렇게 변경
+              ____________            
+            ↙             ↖
+[macbook, ipad] = [ipad, macbook]
+    ↖_____________↙
+
+
+console.log('Macbook 당첨자: ', macbook)
+console.log('iPad 당첨자: ', ipad)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,26 +1,26 @@
-/**
- * [마우스 이동 이벤트]
- *
- * > MouseEvent.type
- * mousemove: 마우스 포인터가 움직일 때
- * mouseover: 마우스 포인터가 요소 밖에서 안으로 움직일 때
- * mouseout: 마우스 포인터가 요소 안에서 밖으로 움직일 때
- *
- * > MouseEvent.target
- * : 이벤트가 발생한 요소
- *
- * > MouseEvent.relatedTarget
- * : 이벤트가 발생하기 직전(또는 직후)에 마우스가 위치해 있던 요소
- */
+const words = ["Codeit", "JavaScript", "DOM", "document", "window", "Event", "Bubbling", "Delegation"];
+const container = document.querySelector("#container");
 
-const box2 = document.querySelector("#box2");
+function getRandomInt(minimum, maximum) {
+  const min = Math.ceil(minimum);
+  const max = Math.floor(maximum);
 
-function printEventData(e) {
-  console.log("event:", e.type);
-  console.log("target:", e.target);
-  console.log("relatedTarget:", e.relatedTarget);
-  console.log("------------------------------------");
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
-box2.addEventListener("mouseover", printEventData);
-box2.addEventListener("mouseout", printEventData);
+function init() {
+  const maxPositionX = container.offsetWidth - 90;
+  const maxPositionY = container.offsetHeight - 100;
+
+  for (let word of words) {
+    const span = document.createElement("span");
+    span.classList.add("word");
+    span.style.top = `${getRandomInt(20, maxPositionY)}px`;
+    span.style.left = `${getRandomInt(20, maxPositionX)}px`;
+    span.dataset.word = word;
+    span.textContent = word;
+    container.append(span);
+  }
+}
+
+init();
