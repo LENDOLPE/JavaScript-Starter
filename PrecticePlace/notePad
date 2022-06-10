@@ -274,7 +274,7 @@ Element.addEventListener('type', 'handler')
 Element.removeEventListner('type', 'handler')
 
 -이벤트 객체 상호작용 등록
-Element.addEventListner('type', funtion(e){
+Element.addEventListner('type', function(e){
 	e.target.classList.add('class')
 })
 
@@ -465,7 +465,7 @@ function sayHi(){
 }
 
 함수 표현식
-const sayHi = fuction () {
+const sayHi = function () {
 	console.log('Hi')
 }
 
@@ -490,7 +490,7 @@ myBtn.addEventListener('click', function () {
 })
 
 //고차 함수로 활용
-function myFuction() {
+function myFunction() {
 	return function() {
 	console.log('Hi?')
 	}
@@ -498,7 +498,7 @@ function myFuction() {
 
 
 - 파라미터의 기본값
-funtion sayHi(name = 'Codeit') {
+function sayHi(name = 'Codeit') {
 	console.log(`Hi! ${name}`)
 }
 
@@ -692,7 +692,7 @@ const cafeMocha = {
 
 ====================================================================================================
 
-'코드 간결화'
+'코드 간결화 (모던한 자바스크립트)' 
 
 변수나 함수의 이름과 프로퍼티의 이름이 같다면 아래와 같이 생략 가능
 const title = 'Codeit'                      const title = 'Codeit'
@@ -709,7 +709,7 @@ const user = {                              const user = {
 const user = {
   firstName: 'Tess',
   lastName: 'Jang',
-  getFullName: fuction() {
+  getFullName: function() {
     return `${this.firstName} ${this.lastName}`
   }
 }
@@ -724,7 +724,7 @@ const user = {
 
 -계산된 속성명(computed property name)
 const propertyName = 'birth'
-const get job = () => 'job'
+const getJob = () => 'job'
 
 const Codeit = {
   ['topic' + 'Name']: 'Modern JavaScript',
@@ -810,6 +810,7 @@ const [macbook, ipad, airpods, coupon = "기본값"] = rank
 
 console.log(macbook, ipad, airpods, coupon)
 
+──────────────────────────────────────────────────────────────────────────────────────────────────────
 
 -변수
 할당된 값을 교환할때 사용
@@ -834,14 +835,289 @@ ipad = temp
 console.log('Macbook 당첨자: ', macbook)
 console.log('iPad 당첨자: ', ipad)
 
+──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+-객체
+객체는 index가 아닌 프로퍼티네임으로 여러가지 값을 구분
+const macbook = {
+  title: '맥북 프로 16형',
+  price: 3690000,
+  memory: '16GB',
+  storage: '1TB SSD 저장 장치',
+  display: '16형 Retina 디스플레이',
+};
+
+const title = macbook.title
+const price = macbook.price
+
+            ↓
+
+const {title, price} = macbook    ▷ 출력: 맥북 프로 16형, 3690000
+ 객체는 프로퍼티 네임을 통해서 분해되기에 할당연산자 오른편의 객체에서 
+할당연산자 왼편에 선언된 변수의 이름과 똑같은 프로퍼티 네임이 있다면
+그 변수에 같은 값이 할당된다.
+ 할당연산자로 기본값 지정 가능
+ const{title, ...rest} = macbook  
+ ▷ 출력:  맥북 프로 16형
+          {price: 3690000, memory: '16GB', storage: '1TB SSD 저장 장치', display: '16형 Retina 디스플레이'}
+
+/*
+변수의 이름은 프로퍼티와 항상 같아야 하는가?
+const{title: product} = macbook 
+console.log(product)  ▷ 출력:맥북 프로 16형
+title이 product로 변경됨
+
+              OR
+          
+const prepertyName = 'title'
+const {[prepertyName]: product} = macbook
+*/
+
+console.log(title)
+console.log(price)
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+-함수
+함수를 이용 한 응용
+
+1. 배열일때 리턴값 활용
+function getArray(){
+  return ['컴퓨터', '냉장고', '세탁기']
+}
+const [el1, el2, el3] = getArray
+console.log(el1, el2, el3) ▷ 출력: 컴퓨터, 냉장고, 세탁기
+
+
+2. rest 파라미터가 배열일때
+function printWinners(...arg){
+  const [macbook, ipad, airpods, ...coupon] = args
+
+  consle.log(`맥북 ${macbook}`)
+  consle.log(`아이패드 ${ipad}`)
+  consle.log(`에어팟 ${airpods}`)
+
+  for(let user of coupon){
+    consle.log(`${user}님`)
+  }
+}
+
+printWinners('효종' ,'효신', '재훈', '소원', '현승', '종훈')
+
+
+3. 2번의 응용
+function printWinners([macbook, ipad, airpods, ...coupon]){
+  consle.log(`맥북 ${macbook}`)
+  consle.log(`아이패드 ${ipad}`)
+  consle.log(`에어팟 ${airpods}`)
+
+  for(let user of coupon){
+    consle.log(`${user}님`)
+  }
+}
+const ranks = ['효종' ,'효신', '재훈', '소원', '현승', '종훈']
+printWinners(ranks)
+
+
+4. 객체일때
+const macbook = {
+  title: '맥북 프로 16형'
+  price: 369000
+  color: 'silver'
+  memory: '16GB'
+  storage: '1TB'
+  display: '16형'
+}
+
+function printSummary(object) {
+  console.log(`선택한 상품은${object.title} 입니다`)
+  console.log(`선택한 상품은${object.color} 입니다`)
+  console.log(`선택한 상품은${object.price} 입니다`)
+}
+printSummary(macbook)
+
+                      ↓
+
+function printSummary(object) {
+  const{title, color, price} = object
+
+  console.log(`선택한 상품은${title} 입니다`)
+  console.log(`선택한 상품은${color} 입니다`)
+  console.log(`선택한 상품은${price} 입니다`)
+}
+printSummary(macbook)
+
+                      ↓ 
+
+함수내에서 특정프로퍼티만 사용할경우 아래와 같이 변경 가능
+function printSummary({title, color, price}) {
+
+  console.log(`선택한 상품은${title} 입니다`)
+  console.log(`선택한 상품은${color} 입니다`)
+  console.log(`선택한 상품은${price} 입니다`)
+}
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+DOM 이벤트
+const btn = docment.querySelector('#btn')
+
+btn.addEventLisener('click', (event) => {
+  event.target.classList.toggle('checked')
+})
+
+                  ↓
+
+const btn = docment.querySelector('#btn')
+
+btn.addEventLisener('click', ({target}) => {
+  target.classList.toggle('checked')
+})
+
+중첩객체 구조분해 (Neste object Destructuring)
+
+====================================================================================================
+
+'에러'
+대표적인 에러 3가지
+
+ReferenceError  - 존재하지 않은 객체일 때
+TypeError       - 잘못된 방식 자료형을 다루었을 때
+SyntaxError     - 문법에 맞지않는 코드를 작성하였을 때
+
+-에러 객체를 제작
+const error = new TypeError('타입 에러가 발생하였습니다.')
+
+console.log(error.name)
+console.log(error.message)
+
+
+-에러 발생 시키기
+const error = new TypeError('타입 에러가 발생하였습니다.')
+
+throw error             //에러 발생 코드
+
+console.log(error.name)
+console.log(error.message)
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+try catch문
+
+try{
+  //코드
+} catch (error){
+  //에러가 발생했을 떄 동작할 코드
+}
+
+ex)
+try {
+  const codeit = '코드잇'
+  console.log(codeit)
+
+  codeit = 'codeit'
+
+  const language = 'JavaScript'
+  console.log(language)
+} catch(e){ //try문에서 나온 에러가 e에 전달됨
+  console.log('에러 후')
+  에러 메세지를 보려면 아래처럼
+  console.log(e)
+  console.log(e.name)
+  console.log(e.message)
+
+  익숙한 에러 메세지를 하려면
+  console.error(e)
+}
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+-try catch문 활용
+
+function printMembers(members){
+  for(const member of members){
+    console.log(member)
+  }
+}
+
+const teamA = ['상혜' '혜진', '지혜', '혜선']
+printMembers(teamA)
+
+const codeit = {name: 'codeit'}
+printMembers(codeit)
+
+const teamB = ['영훈', '재훈', '종훈', '정훈']
+printMembers(teamB)
+
+에러가 발생한 후 프로그램이 멈추기에 에러 발생 후에
+변수를 지정해도 변수가 저장되어있지 않는다
+
+                  ↓ 함수부분을 try catch문으로 변경
+
+function printMembers(members){
+  try{
+    for(const member of members){
+      console.log(member)
+    }
+  } catch(err){
+    alert(`${err.name}가 발생했습니다.`)
+  }
+}
+
+주의해야할점
+ ㄴ try문 안에 선언된 변수는 try문 안에서만 사용 가능.
+ ㄴ 문법자체가 오류라면 실행자체가 안되기에 주의
+ ㄴ 실행이 가능한 코드에서 발생한 에러를 다루는 과정 (Exception)
+
+====================================================================================================
+
+'finally문'
+
+try{
+  //실행할 코드
+} catch(err){
+  //에러가 발생했을떄 코드
+} finally{
+  //항상 실행할 코드
+}
+ try catch문에서 에러의 유무와 상관없이 항상 동작해야할 코드가
+ 필요하다면 finally문을 활용할 수 있습니다.
 
 
 
+function printMembers(...members) {
+  for (const member of members) {
+    console.log(member);
+  }
+}
 
 
+코드의 실행시각을 알고싶을 때 아래의 코드를 이용
+try {
+  printMembers('영훈', '윤수', '동욱');
+} catch (err) {
+  alert('에러가 발생했습니다!');
+  console.error(err);
+} finally {
+  const end = new Date();
+  const msg = `코드 실행을 완료한 시각은 ${end.toLocaleString()}입니다.`;
+  console.log(msg);
+}
 
 
+-finally문에서의 에러 처리
 
+try {
+  try {
+    // 실행할 코드
+  } catch (err) {
+    // 에러가 발상했을 때 실행할 코드
+  } finally {
+    // 항상 실행할 코드
+  }
+} catch (err) {
+  // finall문에서 에러가 발생했을 때 실행할 코드
+}
 
 
 
