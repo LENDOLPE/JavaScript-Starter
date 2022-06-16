@@ -10,3 +10,4 @@ list.addEventListener(
   ({ target }) => target.tagName === 'BUTTON' && deleteMenu(data, target.dataset.index)
 );
 rollBtn.addEventListener('click', () => list.classList.contains('rolling') || rollMenu(data));
+d;
